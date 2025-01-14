@@ -63,3 +63,20 @@ export async function PATCH(request) {
         return NextResponse.json({error : error.message},{status : 500});
     }
 }
+
+export async function DELETE(request) {
+    try{
+        const todoId = request.nextUrl.searchParams.get('todoId');
+
+        const deleteTodo = await Todo.findByIdAndDelete(todoId);
+
+        return NextResponse.json({
+            message : "Successfully deleted",
+            deleteTodo
+        })
+
+    }catch(error){
+        console.log("Error occured in delete.");
+        return NextResponse.json({error : error.message},{status : 500});   
+    }
+}

@@ -42,3 +42,24 @@ export async function GET(request) {
         return NextResponse.json({error : error.message},{status : 500});
     }
 }
+
+export async function PATCH(request) {
+    try{
+        const todoId = request.nextUrl.searchParams.get('todoId');
+
+        const reqBody = await request.json();
+
+        const todo = await Todo.findByIdAndUpdate(todoId,reqBody,{
+            new : true,
+            runValidators : true
+        });
+
+        return NextResponse.json({
+            message : "Successfully updated",
+            todo
+        })
+    }catch(error){
+        console.log("Error occured to update todo");
+        return NextResponse.json({error : error.message},{status : 500});
+    }
+}

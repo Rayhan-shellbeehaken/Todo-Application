@@ -6,7 +6,7 @@ export default function getUserInfo(request){
         const token = request.cookies.get("token")?.value || "";
         const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
         console.log(decodedToken);
-        return decodedToken;
+        return decodedToken.id;
     }catch(error){
         return NextResponse.json({error : error.message},{status : 500});
     }

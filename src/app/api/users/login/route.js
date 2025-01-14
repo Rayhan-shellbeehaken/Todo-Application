@@ -22,9 +22,7 @@ export async function POST(request) {
             return NextResponse.json({message : "Wrong credentials."}, {status : 400});
 
         const tokenPayload = {
-            id : user._id,
-            username : user.username,
-            email : user.email
+            id : user._id
         }
 
         const token = jwt.sign(tokenPayload,process.env.SECRET_TOKEN, {expiresIn : '1h'});

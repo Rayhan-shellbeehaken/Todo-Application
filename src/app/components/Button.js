@@ -32,6 +32,11 @@ export default function Button(props) {
       case "Add ToDo":
         setEnabled(true);
         setPopType("Add");
+        break;
+      case "Edit":
+        setEnabled(true);
+        setPopType("Update");
+        break;
       default:
         break;
     }
@@ -40,7 +45,7 @@ export default function Button(props) {
   return (
     <>
         {isVisible && 
-          <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md mx-1`}>{props.name}</button>
+          <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md m-1`}>{props.name}</button>
         }
           
     </>

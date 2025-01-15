@@ -64,7 +64,6 @@ export default function PopUp() {
                             <button className='text-lg w-[5vw] h-[5vh] bg-white rounded-md' type="submit">{popType}</button>
                             <button className='text-lg w-[5vw] h-[5vh] bg-red-300 rounded-md' onClick={()=>setEnabled(false)}>Cancel</button>
                         </div>
-                        
                     </form>
                 </div>
             }

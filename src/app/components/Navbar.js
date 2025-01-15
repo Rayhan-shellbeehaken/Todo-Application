@@ -1,11 +1,14 @@
 "use client"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './Button'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useAppContext } from '../store/store';
 
 export default function Navbar(props) {
     const router = useRouter();
+    const {user} = useAppContext();
+
     const onLogOut = async() => {
         try{
             const response = await axios.post('/api/users/logout')
@@ -24,7 +27,9 @@ export default function Navbar(props) {
                 <Button name="Back" dest={props.back} bgcolor = "bg-slate-700" textcolor = "text-white"/>
             </div>
             <div>
-                <Button name="Users" dest='/users' bgcolor = "bg-slate-700" textcolor = "text-white"/>
+                {user.role === "admin" && 
+                    <Button name="Users" dest='/users' bgcolor = "bg-slate-700" textcolor = "text-white"/>
+                }
                 <Button name="Profile" dest='/profile' bgcolor = "bg-green-500" textcolor = "text-black"/>
                 <Button name="Log-Out" bgcolor = "bg-red-300" textcolor="text-black" onClick={onLogOut}/> 
             </div>

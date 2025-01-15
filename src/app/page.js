@@ -4,9 +4,11 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import Alert from './components/Alert'
+import { useAppContext } from './store/store'
 
 export default function SignIn() {
   const router = useRouter();
+  const {setLoginTrigger} = useAppContext();
 
   const [user, setUser] = useState({
     email : "",
@@ -27,6 +29,7 @@ export default function SignIn() {
     try{
       const response = await axios.post('/api/users/login',user);
       console.log("Login success : "+response.data);
+      setLoginTrigger(true);
       setAlert({visible : true, type : "SUCCESS" , message : "Successfully logged in"});
       setTimeout(() => {
         router.push('/home');

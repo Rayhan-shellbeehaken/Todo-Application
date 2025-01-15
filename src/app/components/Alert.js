@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+"use client"
+import React from 'react'
+import { useAppContext } from '../store/store';
 
-export default function Alert({type, message}) {
+export default function Alert() {
+    const {alert} = useAppContext();
     const alertType = {
         "SUCCESS" : {
             "bg" : "bg-green-100",
@@ -12,14 +15,20 @@ export default function Alert({type, message}) {
         }
     }
 
-    let alert;
+    let AlertType;
 
-    type === "SUCCESS" ? alert = alertType.SUCCESS : alert = alertType.FAILED;
+    alert.type === "SUCCESS" ? AlertType = alertType.SUCCESS : AlertType = alertType.FAILED;
 
     return (
-        <div className={`absolute top-[10vh] ${alert.bg} w-[15vw] py-[1.5vh] text-center text-lg rounded-lg
-                        ${alert.border} border-2`}>
-            {message}
-        </div>
+        <>
+            {alert.visible && 
+                <div className={`absolute top-[10vh] ${AlertType.bg} w-[15vw] py-[1.5vh] text-center text-lg rounded-lg
+                            ${AlertType.border} border-2`}>
+                    {alert.message}
+                </div>
+            }
+            
+        </>
+        
     )
 }

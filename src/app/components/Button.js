@@ -6,7 +6,7 @@ import { useAppContext } from '../store/store';
 
 export default function Button(props) {
   const router = useRouter();
-  const {user} = useAppContext();
+  const {user, setEnabled, setPopType} = useAppContext();
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
@@ -29,6 +29,9 @@ export default function Button(props) {
       case "Back":
         router.push(props.dest);
         break;
+      case "Add ToDo":
+        setEnabled(true);
+        setPopType("Add");
       default:
         break;
     }

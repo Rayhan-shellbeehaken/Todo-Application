@@ -15,6 +15,7 @@ export default function AppWrapper({ children }) {
       username : '',
       role : ''
   })
+  const [alert, setAlert] = useState({visible : false, type : "", message : ""});
 
   useEffect(() => {
     if(!loginTrigger) return;
@@ -38,8 +39,16 @@ export default function AppWrapper({ children }) {
     fetchData();
   },[loginTrigger]);
 
+  const store = {
+    popType, setPopType,
+    enabled, setEnabled, 
+    user, 
+    setLoginTrigger,
+    alert, setAlert
+  }
+
   return (
-    <AppContext.Provider value={{ popType, setPopType, enabled, setEnabled, user, setLoginTrigger }}>
+    <AppContext.Provider value={store}>
       {children}
     </AppContext.Provider>
   );

@@ -20,7 +20,7 @@ export default function Home() {
             {alert.visible && 
                 <Alert type={alert.type} message={alert.message}/>
             }
-            <Navbar back="/home"/>
+            <Navbar back="/"/>
             <div className='mt-[4vh] w-[60vw]'>
                 {enabled && 
                     <PopUp setAlert={setAlert}/>

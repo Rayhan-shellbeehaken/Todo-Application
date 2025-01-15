@@ -17,7 +17,7 @@ export default function Alert({type, message}) {
     type === "SUCCESS" ? alert = alertType.SUCCESS : alert = alertType.FAILED;
 
     return (
-        <div className={`absolute top-[5vh] ${alert.bg} w-[15vw] py-[1.5vh] text-center text-lg rounded-lg
+        <div className={`absolute top-[10vh] ${alert.bg} w-[15vw] py-[1.5vh] text-center text-lg rounded-lg
                         ${alert.border} border-2`}>
             {message}
         </div>

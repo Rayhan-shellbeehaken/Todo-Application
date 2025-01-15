@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useAppContext } from '../store/store';
 import axios from 'axios';
 
-export default function PopUp() {
+export default function PopUp({setAlert}) {
     const {popType, setEnabled} = useAppContext();
     const [todo, setTodo] = useState({title : '', description : ''});
 
@@ -14,13 +14,26 @@ export default function PopUp() {
         }))
     }
 
+    const disableAlert = () => {
+        setTimeout(() => {
+            setAlert((prev) => ({
+                ...prev,
+                visible : false
+            }))
+        },1000)
+    }
+
     const addTodo = async() => {
         try{
             const response = await axios.post('/api/todos',todo);
             console.log("Successfully add todo");
             console.log(response.data);
             setEnabled(false)
+            setAlert({visible : true, type : "SUCCESS", message : "Task added successfully"});
+            disableAlert();
         }catch(error){
+            setAlert({visible : false, type : "FAILED", message : "Failed to added task"});
+            disableAlert();
             console.log("Error occured to add todo.");
             console.log(error);
         }

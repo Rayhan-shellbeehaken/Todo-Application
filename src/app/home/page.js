@@ -13,6 +13,8 @@ export default function Home() {
         setPopType("Add");
     }
 
+    
+
     return (
         <div className='h-[100vh] w-[100vw] flex flex-col items-center justify-start relative'>
             <Navbar back="/home"/>

@@ -6,7 +6,7 @@ import { createContext, useState, useContext } from 'react'
 const AppContext = createContext();
 
 export default function AppWrapper({ children }) {
-  const [popType, setPopType] = useState("Add");
+  const [popType, setPopType] = useState({title : '', description : '', type : 'Add', value : ''});
   const [enabled, setEnabled] = useState(false);
   const [loginTrigger, setLoginTrigger] = useState(false);
   const [user, setUser] = useState({
@@ -16,6 +16,7 @@ export default function AppWrapper({ children }) {
       role : ''
   })
   const [alert, setAlert] = useState({visible : false, type : "", message : ""});
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     if(!loginTrigger) return;
@@ -41,12 +42,20 @@ export default function AppWrapper({ children }) {
     fetchData();
   },[loginTrigger]);
 
+  const toggleAlert = (type,message) => {
+    setAlert({visible : true, type : type, message : message});
+    setTimeout(()=>{
+      setAlert({visible : false, type : "", message : ""});
+    },1000);
+  }
+
   const store = {
     popType, setPopType,
     enabled, setEnabled, 
     user, 
     setLoginTrigger,
-    alert, setAlert
+    alert, setAlert,
+    toggleAlert
   }
 
   return (

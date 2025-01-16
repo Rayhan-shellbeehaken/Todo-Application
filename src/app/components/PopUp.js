@@ -1,10 +1,10 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../store/store';
 import axios from 'axios';
 
 export default function PopUp() {
-    const {popType, enabled, setEnabled, setAlert} = useAppContext();
+    const {popType, enabled, setEnabled, toggleAlert} = useAppContext();
     const [todo, setTodo] = useState({title : '', description : ''});
 
     const handleChange = (prop, value) => {
@@ -14,26 +14,18 @@ export default function PopUp() {
         }))
     }
 
-    const disableAlert = () => {
-        setTimeout(() => {
-            setAlert((prev) => ({
-                ...prev,
-                visible : false
-            }))
-        },1000)
-    }
+    useEffect(() => {
+        setTodo({ title: popType.title || "", description: popType.description || "" });
+    }, [popType]);
+    
 
     const addTodo = async() => {
         try{
             const response = await axios.post('/api/todos',todo);
-            console.log("Successfully add todo");
-            console.log(response.data);
+            toggleAlert("SUCCESS","Task added successfully")
             setEnabled(false)
-            setAlert({visible : true, type : "SUCCESS", message : "Task added successfully"});
-            disableAlert();
         }catch(error){
-            setAlert({visible : false, type : "FAILED", message : "Failed to added task"});
-            disableAlert();
+            toggleAlert("Failed","Failed to added task")
             console.log("Error occured to add todo.");
             console.log(error);
         }
@@ -41,7 +33,9 @@ export default function PopUp() {
 
     const updateTodo = async() => {
         try{
-            console.log("Update processing");
+            const response = await axios.patch(`/api/todos?todoId=${popType.value}`,todo);
+            toggleAlert("SUCCESS","Task update successfully")
+            console.log("Update Sucessful");
             setEnabled(false);
         }catch(error){
             console.log("Error to update todo");
@@ -50,7 +44,7 @@ export default function PopUp() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        popType === "Add" ? addTodo() : updateTodo();
+        popType.type === "Add" ? addTodo() : updateTodo();
     }
 
     return (
@@ -58,10 +52,10 @@ export default function PopUp() {
             {enabled && 
                 <div className='absolute z-10 w-[40vw] top-[20%] left-[50%] translate-x-[-50%]'>
                     <form className='bg-slate-600 flex flex-col p-2 rounded-md' onSubmit={handleSubmit}>
-                        <input placeholder='Title' type='text' className='w-[100%] my-2 rounded-md p-2' onChange={(e) => handleChange("title",e.target.value)}></input>
-                        <textarea placeholder='Description' type="text" className='w-[100%] h-[10vh] my-2 rounded-md p-2 resize-none' onChange={(e) => handleChange("description",e.target.value)}></textarea>
+                        <input value={todo.title} placeholder='Title' type='text' className='w-[100%] my-2 rounded-md p-2' onChange={(e) => handleChange("title",e.target.value)}></input>
+                        <textarea value={todo.description} placeholder='Description' type="text" className='w-[100%] h-[10vh] my-2 rounded-md p-2 resize-none' onChange={(e) => handleChange("description",e.target.value)}></textarea>
                         <div className='my-2 space-x-2'>
-                            <button className='text-lg w-[5vw] h-[5vh] bg-white rounded-md' type="submit">{popType}</button>
+                            <button className='text-lg w-[5vw] h-[5vh] bg-white rounded-md' type="submit">{popType.type}</button>
                             <button className='text-lg w-[5vw] h-[5vh] bg-red-300 rounded-md' onClick={()=>setEnabled(false)}>Cancel</button>
                         </div>
                     </form>

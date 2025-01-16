@@ -7,10 +7,10 @@ import Button from '../components/Button'
 
 export default function Home() {
     return (
-        <div className='h-[100vh] w-[100vw] flex flex-col items-center justify-start relative'>      
+        <div className='h-[100vh] w-[100vw] flex flex-col items-center justify-start relative overflow-x-hidden'>      
             <Alert/>
             <Navbar back="/"/>
-            <div className='mt-[4vh] w-[60vw]'>
+            <div className='mt-[1vh] w-[60vw]'>
                 <PopUp/>
                 <div className='text-right px-4 py-1'>
                     <Button bgcolor='bg-slate-600' textcolor='text-white' name='Add ToDo'/>

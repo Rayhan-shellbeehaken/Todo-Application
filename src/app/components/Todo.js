@@ -1,17 +1,17 @@
 import React from 'react'
 import Button from './Button';
 
-export default function Todo() {
+export default function Todo(props) {
 
   return (
-    <div className='flex justify-between bg-slate-300 mb-2 py-1 px-3 rounded-lg'>
+    <div className='flex justify-between bg-slate-300 w-[100%] mb-2 py-1 px-3 rounded-lg'>
         <div className=''>
-            <h2 className='text-3xl'>Title</h2>
-            <p className='text-lg mt-3'>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+            <h2 className='text-3xl'>{props.title}</h2>
+            <p className='text-lg mt-3'>{props.description}</p>
         </div>
-        <div className='text-right'>
-            <Button bgcolor='bg-white' textcolor='black' name='Edit'/>
-            <Button bgcolor='bg-red-300' textcolor='black' name='Delete'/>
+        <div className='text-right flex flex-col justify-center items-center'>
+            <Button bgcolor='bg-white' textcolor='black' name='Edit' value={props.value}/>
+            <Button bgcolor='bg-red-300' textcolor='black' name='Delete' value={props.value}/>
         </div>
     </div>
   )

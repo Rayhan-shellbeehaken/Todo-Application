@@ -19,12 +19,9 @@ export default function AppWrapper({ children }) {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    if(!loginTrigger) return;
     async function fetchData() {
       try{
         const response = await axios.get('/api/users/profile');
-        const test = await axios.get('/api/todos');
-        console.log(test.data)
         console.log(response.data.user);
         setUser({
           id : response.data.user._id,
@@ -35,12 +32,10 @@ export default function AppWrapper({ children }) {
       }catch(error){
         console.log("Error to get user info");
         console.log(error);
-      }finally{
-        setLoginTrigger(false);
       }
     }
     fetchData();
-  },[loginTrigger]);
+  },[]);
 
   const toggleAlert = (type,message) => {
     setAlert({visible : true, type : type, message : message});

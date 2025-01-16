@@ -11,6 +11,8 @@ export default function Button(props) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    
+
     if (props.name === "Users" && user.role === "user") {
       setIsVisible(false);
     }else setIsVisible(true)
@@ -61,7 +63,7 @@ export default function Button(props) {
 
   return (
     <>
-        {isVisible && 
+        {props.cholbe && 
           <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md m-1`}>{props.name}</button>
         }
           

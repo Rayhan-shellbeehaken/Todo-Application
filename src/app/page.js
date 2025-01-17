@@ -8,7 +8,7 @@ import { useAppContext } from './store/store'
 
 export default function SignIn() {
   const router = useRouter();
-  const {setLoginTrigger} = useAppContext();
+  const {setLoginTrigger, toggleAlert} = useAppContext();
 
   const [user, setUser] = useState({
     email : "",
@@ -22,35 +22,23 @@ export default function SignIn() {
     }))
   }
 
-  const [alert, setAlert] = useState({visible : false, type : "", message : ""});
-
   const onLogin = async(event) => {
     event.preventDefault();
     try{
       const response = await axios.post('/api/users/login',user);
-      console.log("Login success : "+response.data);
       setLoginTrigger(true);
-      setAlert({visible : true, type : "SUCCESS" , message : "Successfully logged in"});
+      toggleAlert("SUCCESS","Successfully login");
       setTimeout(() => {
         router.push('/home');
       },1000)
     }catch(error){
-      setAlert({visible : true, type : "FAILED" , message : "Login Failed"});
-      setTimeout(() => {
-        setAlert((prev) => ({
-          ...prev,
-          visible : false
-        }))
-      },1000);
-      console.log("Login failed");
+      toggleAlert("FAILED","Login failed");
     }
   }
 
   return (
     <div className='flex justify-center items-center h-[100vh] w-[100vw] relative'>
-      {alert.visible && 
-         <Alert type={alert.type} message={alert.message}/>
-      }
+      <Alert/>
       <div className='bg-slate-400 w-[25%] px-2 py-2 flex flex-col items-center rounded-md'>
         <h2 className='font-bold text-3xl'>Sign-In form</h2>
         <form onSubmit={onLogin} className='flex flex-col justify-center items-center w-[100%] mt-7'>

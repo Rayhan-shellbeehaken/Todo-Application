@@ -1,6 +1,6 @@
 import { connect } from "@/app/dbConfig/dbConfig";
 import { NextResponse } from "next/server";
-import getUserInfo from "@/app/helpers/getUserInfo";
+import {getUserInfo} from "@/app/helpers/getUserInfo";
 import User from "@/app/models/userModel";
 
 connect();

@@ -8,13 +8,6 @@ import axios from 'axios';
 export default function Button(props) {
   const router = useRouter();
   const {user, setEnabled, setPopType, toggleAlert, getTodos} = useAppContext();
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    if (typeof props.cholbe !== 'undefined') {
-      setIsVisible(props.cholbe);
-    }
-  }, [props.cholbe]);
 
   const deleteTodo = async(id) => {
     try{
@@ -60,7 +53,7 @@ export default function Button(props) {
 
   return (
     <>
-        <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md m-1 ${isVisible ? '' : 'hidden'}`}>{props.name}</button>
+        <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md m-1 ${(props.name !== 'Users' || user.role === 'admin') ? '' : 'hidden'}`}>{props.name}</button>
     </>
   )
 }

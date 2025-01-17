@@ -18,3 +18,24 @@ export async function GET(request) {
         return NextResponse.json({error : error.message},{status : 500});        
     }
 }
+
+export async function PATCH(request) {
+    try{
+        const reqBody = await request.json();
+        const userId = await getUserInfo(request);
+
+        if(!userId)
+            return NextResponse.json({message : 'Sorry, login first'},{status : 400});
+
+        const user = await User.findByIdAndUpdate(userId, reqBody, {
+            new: true,
+            runValidators: true,
+        });
+
+        return NextResponse.json({message : 'Successfully updated', user},{status : 200});
+
+    }catch(error){
+        console.log("Error in updating user info");
+        return NextResponse.json({error : error.message},{status : 500});
+    }
+}

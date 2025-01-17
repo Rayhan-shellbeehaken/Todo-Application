@@ -10,7 +10,7 @@ export async function POST(request) {
     const reqBody = await request.json();
     const { title, description } = reqBody;
 
-    const userId = getUserInfo(request);
+    const userId = await getUserInfo(request);
 
     const newTodo = new Todo({
       title,

@@ -7,13 +7,15 @@ import { useAppContext } from '../store/store'
 import Loading from '../components/Loading'
 import axios from 'axios'
 import Alert from '../components/Alert'
+import { useRouter } from 'next/navigation'
 
 export default function profile() {
     const { user, getUser, loading, toggleAlert } = useAppContext();
-    const [userDetails , setUserDetails] = useState({username : "" , email : ""});
+    const [userDetails , setUserDetails] = useState({username : "" , email : "", id : ""});
+    const router = useRouter();
 
     useEffect(() => {
-        setUserDetails({username : user.username || "", email : user.email || ""});
+        setUserDetails({username : user.username || "", email : user.email || "", id : user._id});
     },[user]);
 
     const handleChange = (prop, value) => {
@@ -30,6 +32,21 @@ export default function profile() {
             getUser();
         }catch(error){
             console.log("Update hoi nai");
+            console.log(error);
+        }
+    }
+
+    const onDelete = async() => {
+        try{
+            const logout = await axios.post('/api/users/logout');
+            const response = await axios.delete(`/api/users/delete?userId=${userDetails.id}`);
+            toggleAlert("SUCCESS","Account deleted successfully");
+            setTimeout(() => {
+                router.push('/');
+            },1000);
+        }catch(error){
+            console.log('To delete error');
+            toggleAlert("FAILED","Failed to delete account")
             console.log(error);
         }
     }
@@ -58,7 +75,7 @@ export default function profile() {
                                 </div>
                                 <div className='w-[100%] px-2'>
                                     <button className='text-lg w-[27%] h-[5vh] bg-white rounded-md my-2 mr-2'>Change password</button>
-                                    <button className='text-lg w-[25%] h-[5vh] rounded-md my-2 bg-red-300'>Delete account</button>
+                                    <button className='text-lg w-[25%] h-[5vh] rounded-md my-2 bg-red-300' onClick={() => onDelete()}>Delete account</button>
                                 </div>
                             </div>
                         </div>

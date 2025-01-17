@@ -19,7 +19,7 @@ export async function getUserRole(request) {
     try {
       const token = request.cookies.get("token")?.value || "";
       if (!token) {
-        throw new Error("Token not found");
+        return NextResponse.json({message : 'token nai'});
       }
 
       const secret = new TextEncoder().encode(process.env.SECRET_TOKEN);

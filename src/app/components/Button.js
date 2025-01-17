@@ -12,7 +12,6 @@ export default function Button(props) {
 
   useEffect(() => {
     if (typeof props.cholbe !== 'undefined') {
-      // Update visibility only when props.cholbe is defined
       setIsVisible(props.cholbe);
     }
   }, [props.cholbe]);
@@ -22,10 +21,9 @@ export default function Button(props) {
         const response = await axios.delete(`/api/todos?todoId=${id}`);
         toggleAlert("SUCCESS","Task deleted successfully");
         getTodos();
-        console.log("Kaj kore");
     }catch(error){
         console.log("Delete failed!");
-        toggleAlert("Failed","Failed to delete task")
+        toggleAlert("FAILED","Failed to delete task")
         console.log(error);
     }
   }

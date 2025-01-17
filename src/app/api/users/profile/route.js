@@ -7,7 +7,10 @@ connect();
 
 export async function GET(request) {
     try{
-        const userId = getUserInfo(request);
+        const userId = await getUserInfo(request);
+        if(!userId){
+            return NextResponse.json({message : 'Login first'},{status : 400});
+        }
         const user = await User.findOne({_id : userId},{password : 0, __v : 0});
         return NextResponse.json({user : user},{status : 200});
     }catch(error){

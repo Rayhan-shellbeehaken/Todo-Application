@@ -17,12 +17,19 @@ export default function AppWrapper({ children }) {
   })
   const [alert, setAlert] = useState({visible : false, type : "", message : ""});
   const [todos, setTodos] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getTodos = async() => {
     const response = await axios.get('/api/todos');
     setLoading(false);
     setTodos(response.data.todos);
+  }
+
+  const getUsers = async() => {
+    const response = await axios.get('/api/users/profiles');
+    setLoading(false);
+    setUsers(response.data.users);
   }
 
   const toggleAlert = (type,message) => {
@@ -40,27 +47,30 @@ export default function AppWrapper({ children }) {
     alert, setAlert,
     toggleAlert,
     todos, getTodos,
-    loading
+    loading,
+    users, getUsers
   }
 
   useEffect(() => {
+    if(!loginTrigger) return;
     async function fetchData() {
       try{
         const response = await axios.get('/api/users/profile');
-        console.log(response.data.user);
-        setUser({
-          id : response.data.user._id,
-          email : response.data.user.email,
-          username : response.data.user.username,
-          role : response.data.user.role
-        })
+        if(response.status === 200){
+          setUser({
+            id : response.data.user._id,
+            email : response.data.user.email,
+            username : response.data.user.username,
+            role : response.data.user.role
+          })
+        }
       }catch(error){
         console.log("Error to get user info");
         console.log(error);
       }
     }
     fetchData();
-  },[]);
+  },[loginTrigger]);
 
   return (
     <AppContext.Provider value={store}>

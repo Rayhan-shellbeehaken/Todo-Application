@@ -5,6 +5,9 @@ import { jwtVerify } from "jose";
 export function getUserInfo(request){
     try{
         const token = request.cookies.get("token")?.value || "";
+        if(!token){
+          return '';
+        }
         const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
         //console.log(decodedToken);
         return decodedToken.id;

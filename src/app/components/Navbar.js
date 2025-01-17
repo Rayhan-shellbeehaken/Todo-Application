@@ -10,8 +10,6 @@ export default function Navbar(props) {
         async function fetch() {
             try{
               const response = await axios.get('/api/users/profile');
-              console.log("Navbar theke");
-              console.log(response.data.user.role);
               if(response.data.user.role === 'user') setCholbe(false);
               else setCholbe(true);
             }catch(error){

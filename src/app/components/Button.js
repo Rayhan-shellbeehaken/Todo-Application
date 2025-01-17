@@ -7,27 +7,18 @@ import axios from 'axios';
 
 export default function Button(props) {
   const router = useRouter();
-  const {user, setEnabled, setPopType, toggleAlert} = useAppContext();
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    
-
-    if (props.name === "Users" && user.role === "user") {
-      setIsVisible(false);
-    }else setIsVisible(true)
-  }, []);
+  const {user, setEnabled, setPopType, toggleAlert, getTodos} = useAppContext();
 
   const deleteTodo = async(id) => {
     try{
         const response = await axios.delete(`/api/todos?todoId=${id}`);
-        toggleAlert("SUCCESS","Task deleted successfully")
+        toggleAlert("SUCCESS","Task deleted successfully");
+        getTodos();
         console.log("Kaj kore");
     }catch(error){
         console.log("Delete failed!");
         toggleAlert("Failed","Failed to delete task")
         console.log(error);
-        
     }
   }
 
@@ -65,8 +56,7 @@ export default function Button(props) {
     <>
         {props.cholbe && 
           <button onClick={handleClick} className={`${props.bgcolor} ${props.textcolor} w-[5vw] h-[5vh] text-lg rounded-md m-1`}>{props.name}</button>
-        }
-          
+        }   
     </>
   )
 }

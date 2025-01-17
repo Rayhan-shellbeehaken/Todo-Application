@@ -1,19 +1,14 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Todo from './Todo'
-import axios from 'axios';
+import { useAppContext } from '../store/store';
 
 export default function TodoList() {
 
-  const [todos, setTodos] = useState([]);
+  const {todos, getTodos} = useAppContext();
 
   useEffect(()=>{
-    async function fetch() {
-      const response = await axios.get('/api/todos');
-      console.log(response.data.todos);
-      setTodos(response.data.todos);
-    }
-    fetch();
+    getTodos();
   },[])
 
   return (

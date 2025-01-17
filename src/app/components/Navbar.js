@@ -14,15 +14,14 @@ export default function Navbar(props) {
               console.log(response.data.user.role);
               if(response.data.user.role === 'user') setCholbe(false);
               else setCholbe(true);
-              
             }catch(error){
               console.log("In button");
               console.log(error);
             }
           }
-      
           fetch();
-    })
+    },[])
+
     return (
         <div className='bg-slate-200 w-[100%] flex justify-between items-center py-[2vh] px-[3vw] shadow-md'>
             <div>

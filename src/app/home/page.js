@@ -13,7 +13,7 @@ export default function Home() {
             <div className='mt-[1vh] w-[60vw]'>
                 <PopUp/>
                 <div className='text-right px-4 py-1'>
-                    <Button bgcolor='bg-slate-600' textcolor='text-white' name='Add ToDo'/>
+                    <Button bgcolor='bg-slate-600' textcolor='text-white' name='Add ToDo' cholbe={true}/>
                 </div>
                 <div className='px-3'>
                     <TodoList/>

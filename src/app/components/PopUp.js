@@ -4,7 +4,7 @@ import { useAppContext } from '../store/store';
 import axios from 'axios';
 
 export default function PopUp() {
-    const {popType, enabled, setEnabled, toggleAlert} = useAppContext();
+    const {popType, enabled, setEnabled, toggleAlert, getTodos} = useAppContext();
     const [todo, setTodo] = useState({title : '', description : ''});
 
     const handleChange = (prop, value) => {
@@ -22,7 +22,8 @@ export default function PopUp() {
     const addTodo = async() => {
         try{
             const response = await axios.post('/api/todos',todo);
-            toggleAlert("SUCCESS","Task added successfully")
+            toggleAlert("SUCCESS","Task added successfully");
+            getTodos();
             setEnabled(false)
         }catch(error){
             toggleAlert("Failed","Failed to added task")
@@ -34,7 +35,8 @@ export default function PopUp() {
     const updateTodo = async() => {
         try{
             const response = await axios.patch(`/api/todos?todoId=${popType.value}`,todo);
-            toggleAlert("SUCCESS","Task update successfully")
+            toggleAlert("SUCCESS","Task update successfully");
+            getTodos();
             console.log("Update Sucessful");
             setEnabled(false);
         }catch(error){

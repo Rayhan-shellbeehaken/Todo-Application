@@ -18,6 +18,28 @@ export default function AppWrapper({ children }) {
   const [alert, setAlert] = useState({visible : false, type : "", message : ""});
   const [todos, setTodos] = useState([]);
 
+  const getTodos = async() => {
+    const response = await axios.get('/api/todos');
+    setTodos(response.data.todos);
+  }
+
+  const toggleAlert = (type,message) => {
+    setAlert({visible : true, type : type, message : message});
+    setTimeout(()=>{
+      setAlert({visible : false, type : "", message : ""});
+    },1000);
+  }
+
+  const store = {
+    popType, setPopType,
+    enabled, setEnabled, 
+    user, 
+    setLoginTrigger,
+    alert, setAlert,
+    toggleAlert,
+    todos, getTodos
+  }
+
   useEffect(() => {
     async function fetchData() {
       try{
@@ -36,22 +58,6 @@ export default function AppWrapper({ children }) {
     }
     fetchData();
   },[]);
-
-  const toggleAlert = (type,message) => {
-    setAlert({visible : true, type : type, message : message});
-    setTimeout(()=>{
-      setAlert({visible : false, type : "", message : ""});
-    },1000);
-  }
-
-  const store = {
-    popType, setPopType,
-    enabled, setEnabled, 
-    user, 
-    setLoginTrigger,
-    alert, setAlert,
-    toggleAlert
-  }
 
   return (
     <AppContext.Provider value={store}>

@@ -5,7 +5,7 @@ import { useAppContext } from '../store/store';
 
 export default function TodoList() {
 
-  const {todos, getTodos} = useAppContext();
+  const {todos, getTodos, loading} = useAppContext();
 
   useEffect(()=>{
     getTodos();
@@ -13,11 +13,13 @@ export default function TodoList() {
 
   return (
     <>
-        {
+      {loading ? (
+          <div className='text-4xl text-center'>Loading...</div> // Show loading if todos are empty (still fetching)
+        ) : (
           todos.map((todo) => (
-            <Todo key={todo._id} value={todo._id} title={todo.title} description={todo.description}/>
-          ))
-        }
+            <Todo key={todo._id} value={todo._id} title={todo.title} description={todo.description} />
+        ))
+      )}
     </>
   )
 }

@@ -17,9 +17,11 @@ export default function AppWrapper({ children }) {
   })
   const [alert, setAlert] = useState({visible : false, type : "", message : ""});
   const [todos, setTodos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getTodos = async() => {
     const response = await axios.get('/api/todos');
+    setLoading(false);
     setTodos(response.data.todos);
   }
 
@@ -37,7 +39,8 @@ export default function AppWrapper({ children }) {
     setLoginTrigger,
     alert, setAlert,
     toggleAlert,
-    todos, getTodos
+    todos, getTodos,
+    loading
   }
 
   useEffect(() => {

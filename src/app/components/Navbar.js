@@ -4,7 +4,7 @@ import Button from './Button'
 import axios from 'axios'
 
 export default function Navbar(props) {
-    const [cholbe , setCholbe] = useState(true);
+    const [cholbe , setCholbe] = useState(false);
 
     useEffect(() => {
         async function fetch() {
@@ -28,6 +28,7 @@ export default function Navbar(props) {
                 <Button name="Back" dest={props.back} bgcolor = "bg-slate-700" textcolor = "text-white" cholbe = {true}/>
             </div>
             <div>
+                
                 <Button name="Users" bgcolor = "bg-slate-700" textcolor = "text-white" cholbe = {cholbe}/>
                 <Button name="Profile" bgcolor = "bg-green-500" textcolor = "text-black" cholbe = {true}/>
                 <Button name="Log-Out" bgcolor = "bg-red-300" textcolor="text-black" cholbe = {true}/> 
